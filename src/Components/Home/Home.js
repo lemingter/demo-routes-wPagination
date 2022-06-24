@@ -1,9 +1,10 @@
 import React from 'react';
+import List from '../Character/List';
 
 function Home(props) {
     return (
-        <div>
-            <h1>Home</h1>
+        <div className= "container">
+            <List/>
         </div>
     );
 }

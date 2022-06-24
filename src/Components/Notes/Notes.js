@@ -43,13 +43,13 @@ const Notes = () => {
                     </li>
                 ))
             }
-        </ul>
+        </ul> 
     )
 
    
     return (
         <div className = "Notes">
-            <h1>Notes</h1>
+            <h1>Notes ♠</h1>   
             {renderNotes(selectedNote || notes )}
         </div>
     );
