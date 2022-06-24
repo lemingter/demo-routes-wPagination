@@ -3,24 +3,55 @@ import Character from './Character';
 
 export default function List() {
     const [characters, setCharacter] = useState([]);
-
+    const [loading, setLoading] = useState(true);
     
+    const [currentPageUrl, setCurrentPageUrl] = useState("https://rickandmortyapi.com/api/character");
+    const [nextPageUrl, setNextPageUrl] = useState();
+    const [prevPageUrl, setPrevPageUrl] = useState();
+    const [pages, setPages] = useState();
 
     useEffect(() => {
+        const url = currentPageUrl;
+
         async function fetchData() {
-            const data = await fetch("https://rickandmortyapi.com/api/character");
-            const {results} = await data.json();
+            const data = await fetch(url);
+            const {info, results} = await data.json();
+
             setCharacter(results);
+
+            setLoading(false);
+
+            setNextPageUrl(info.next);
+            setPrevPageUrl(info.prev);
+            setPages(info.pages);
         }
 
         fetchData();
-    }, [characters.length]);
+    }, [currentPageUrl]);
+
+    const nextPage = () => {
+        setCurrentPageUrl(nextPageUrl);
+
+    }
+
+    const prevPage = () => {
+        setCurrentPageUrl(prevPageUrl);
+    }
+
+    const goToPage = (num) => {
+        setCurrentPageUrl(`https://rickandmortyapi.com/api/character?page=${num}`);
+    }
 
     return (
         <div>
             <h2>Characters</h2>
             <div className="row">
                 {
+                loading? (
+                    <div>Loading...</div>
+                )
+                :
+                (
                 characters.map((character) => (
                     <Character
                         key={character.id}
@@ -28,7 +59,7 @@ export default function List() {
                         origin={character.origin}
                         image={character.image}
                     />
-                ))
+                )))
                 }
             </div>
         </div>
