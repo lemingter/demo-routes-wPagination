@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import Character from './Character';
-import Pagination from './Pagination';
+import PaginationUI from './Pagination';
+import "./List.css";
 
 export default function List() {
     const [characters, setCharacter] = useState([]);
     const [loading, setLoading] = useState(true);
     
     const [currentPageUrl, setCurrentPageUrl] = useState("https://rickandmortyapi.com/api/character");
-    const [nextPageUrl, setNextPageUrl] = useState();
-    const [prevPageUrl, setPrevPageUrl] = useState();
+    const [currentPageNum, setCurrentPageNum] = useState(1);
     const [pages, setPages] = useState();
 
     useEffect(() => {
@@ -22,26 +22,15 @@ export default function List() {
 
             setLoading(false);
 
-            setNextPageUrl(info.next);
-            setPrevPageUrl(info.prev);
             setPages(info.pages);
-            console.log(info.prev);
         }
 
         fetchData();
     }, [currentPageUrl]);
 
-    const nextPage = () => {
-        setCurrentPageUrl(nextPageUrl);
-
-    }
-
-    const prevPage = () => {
-        setCurrentPageUrl(prevPageUrl);
-    }
-
     const goToPage = (num) => {
         setCurrentPageUrl(`https://rickandmortyapi.com/api/character?page=${num}`);
+        setCurrentPageNum(num);
     }
 
     if(loading)
@@ -50,14 +39,13 @@ export default function List() {
     return (
         <div>
             <h2>Characters</h2>
-            <Pagination 
-                nextPage = {nextPageUrl}
-                prevPage = {prevPageUrl}
-                goToPage = {goToPage}
-                pages = {pages}
-                goToPrevPage = {prevPage}
-                goToNextPage = {nextPage}
-            />
+            <div className="PaginationUI">
+                <PaginationUI 
+                    currentPage = {currentPageNum}
+                    goToPage = {goToPage}
+                    pages = {pages}
+                />
+            </div>
             <div className="row">
                 {
                     characters.map((character) => (
@@ -70,14 +58,13 @@ export default function List() {
                     ))
                 }
             </div>
-            <Pagination 
-                nextPage = {nextPageUrl}
-                prevPage = {prevPageUrl}
-                goToPage = {goToPage}
-                pages = {pages}
-                goToPrevPage = {prevPage}
-                goToNextPage = {nextPage}
-            />
+            <div className="PaginationUI">
+                <PaginationUI 
+                    currentPage = {currentPageNum}
+                    goToPage = {goToPage}
+                    pages = {pages}
+                />
+            </div>
         </div>
     )
 }
