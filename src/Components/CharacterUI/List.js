@@ -37,15 +37,13 @@ export default function List() {
         return (<div>Loading...</div>)
 
     return (
-        <div>
+        <div className="List">
             <h2>Characters</h2>
-            <div className="PaginationUI">
-                <PaginationUI 
-                    currentPage = {currentPageNum}
-                    goToPage = {goToPage}
-                    pages = {pages}
-                />
-            </div>
+            <PaginationUI 
+                currentPage = {currentPageNum}
+                goToPage = {goToPage}
+                pages = {pages}
+            />
             <div className="row">
                 {
                     characters.map((character) => (
@@ -58,13 +56,11 @@ export default function List() {
                     ))
                 }
             </div>
-            <div className="PaginationUI">
-                <PaginationUI 
-                    currentPage = {currentPageNum}
-                    goToPage = {goToPage}
-                    pages = {pages}
-                />
-            </div>
+            <PaginationUI 
+                currentPage = {currentPageNum}
+                goToPage = {goToPage}
+                pages = {pages}
+            />
         </div>
     )
 }

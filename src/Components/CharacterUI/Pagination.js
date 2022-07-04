@@ -8,7 +8,11 @@ function PaginationUI({currentPage, goToPage, pages}) {
     }
 
     return(
-        <Pagination page={currentPage} count={pages} onChange={handleOnChange} />
+        <Pagination 
+            page={currentPage} 
+            count={pages} 
+            onChange={handleOnChange} 
+        />
     )
 }
 
